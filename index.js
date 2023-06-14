@@ -6,6 +6,8 @@ import fs from 'fs'
 import dotenv from 'dotenv'
 dotenv.config()
 
+console.log(process.env.PRIVATE_KEY, process.env.KEY_ID)
+
 const privateKey =
   process.env.PRIVATE_KEY || fs.readFileSync('./AuthKey.p8', 'utf8')
 
@@ -43,7 +45,7 @@ cron.schedule('*/45 * * * *', (time) => {
   console.log('refreshing the token: (every 45 minutes)', time, token)
 })
 
-const host = 'https://api.development.push.apple.com'
+const host = 'https://api.push.apple.com'
 const path = '/3/device/'
 
 const app = express()
@@ -80,12 +82,14 @@ app.post('/new-comment', (req, res) => {
   const headers = {
     ':method': 'POST',
     'apns-topic': 'com.Jawwaad.OurCommunity', //application bundle ID
+    'apns-push-type': 'alert',
     ':scheme': 'https',
     authorization: 'bearer ' + token
   }
 
   req.body.devices.forEach((device) => {
     headers[':path'] = path + device
+    console.log(headers)
 
     const request = client.request(headers)
 
