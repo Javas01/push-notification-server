@@ -116,6 +116,7 @@ app.post('/new-comment', (req, res) => {
 })
 
 app.on('close', () => {
+  '!!Closing connection to APNs!!'
   client.close()
 })
 
