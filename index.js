@@ -58,7 +58,7 @@ client.on('connect', (ddd, ww) => {
   console.log('connected to APNs')
 })
 
-client.on('error', (err) => console.error('Error -> ', err))
+client.on('error', (err) => console.error('Cient Error -> ', err))
 
 client.on('close', () => {
   console.log('closed connection to APNs')
@@ -113,12 +113,16 @@ app.post('/new-comment', (req, res) => {
       data += chunk
     })
     request.write(JSON.stringify(body))
-    request.on('error', (err) => console.error(err))
+    request.on('error', (err) => console.error('Request Error -> ', err))
     request.on('end', () => {
       console.log(`\n Data -> ${data}`)
     })
     request.end()
   })
+})
+
+app.on('error', (err) => {
+  console.error('Server Error -> ', err)
 })
 
 app.on('close', () => {
