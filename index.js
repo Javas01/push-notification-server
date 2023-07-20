@@ -80,8 +80,7 @@ app.post('/new-comment', (req, res) => {
         body: req.body.body
       },
       badge: 1,
-      sound: 'default',
-      'content-available': 1
+      sound: 'default'
     }
   }
 
