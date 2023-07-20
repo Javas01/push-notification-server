@@ -74,7 +74,13 @@ app.post('/new-comment', (req, res) => {
 
   const body = {
     aps: {
-      alert: req.body.alert,
+      alert: {
+        title: req.body.title,
+        subtitle: req.body.subtitle,
+        body: req.body.body
+      },
+      badge: 1,
+      sound: 'default',
       'content-available': 1
     }
   }
